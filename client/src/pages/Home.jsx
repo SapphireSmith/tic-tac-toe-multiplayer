@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useSocketContext } from '../context/SocketContext';
 import useStore from '../zustand/zustand';
+import Loader from '../assets/loading.gif'
+
 
 const Home = () => {
     const { socket } = useSocketContext();
@@ -11,6 +13,7 @@ const Home = () => {
         setPlayerName,
         setRoomDetails
     } = useStore();
+    const [loader, setLoader] = useState(false)
 
 
     const navigateTo = useNavigate();
@@ -18,6 +21,7 @@ const Home = () => {
     useEffect(() => {
         if (socket) {
             const handleMatchFound = (roomData) => {
+                setLoader(false)
                 setRoomDetails(roomData)
                 navigateTo('/match')
             };
@@ -31,6 +35,7 @@ const Home = () => {
     }, [socket, navigateTo])
 
     const onSubmitHandler = (e) => {
+        setLoader(true)
         e.preventDefault();
         const id = e.nativeEvent.submitter.id;
         if (socket) {
@@ -46,8 +51,8 @@ const Home = () => {
 
     return (
         <div className=" h-screen container mx-auto flex flex-col items-center justify-center py-12">
-            <div>
-                <p>Total Players - {usersOnline}</p>
+            <div className='absolute top-10 '>
+                <p>Total Players Online - {usersOnline}</p>
             </div>
             <form className="flex flex-col space-y-4 w-full max-w-md" onSubmit={onSubmitHandler}>
                 <div className="flex items-center">
@@ -60,6 +65,12 @@ const Home = () => {
                     <button type="submit" id="find-opponent" className="bg-violet-500 text-white hover:bg-violet-300 duration-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Find Opponent</button>
                     {/* <button type="submit" id="play-with-friend" className="bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Play with Friend</button> */}
                 </div>
+                {
+                    loader ?
+                        <div className='flex justify-center'>
+                            <img src={Loader} alt="loader" className='h-[100px]' />
+                        </div> : ''
+                }
             </form>
         </div>
 

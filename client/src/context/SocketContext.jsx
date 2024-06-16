@@ -2,7 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import useStore from '../zustand/zustand';
 
-const SOCKET_URL = 'http://localhost:3000'
+const SOCKET_URL_LOCAL = 'http://localhost:3000';
+const SOCKET_URL = 'https://tic-tac-toe-multiplayer-8ezu.onrender.com';
 
 export const SocketContext = createContext();
 

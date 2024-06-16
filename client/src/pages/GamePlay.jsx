@@ -102,9 +102,8 @@ const GamePlay = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white">
       <h1 className="text-5xl text-violet-500 font-bold mb-10">Tic-Tac-Toe</h1>
-      <div className="w-[1000px] flex justify-center">
-        <p className="mr-auto">You - <span id="user">{playerName}</span></p>
-        <p className="ml-auto">Opponent - <span id="oppName">{opponentName || ''}</span></p>
+      <div className="flex gap-8">
+        <p className="mr-auto"><span id="user" className='text-xl font-bold'>{playerName}</span> vs <span className='text-xl font-bold'>{opponentName || ''}</span></p>
       </div>
       {endGameMessage === '' ? (
         <>
